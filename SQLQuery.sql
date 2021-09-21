@@ -1,3 +1,34 @@
+select FirstName, Lastname from Person.Person where FirstName = 'Mark'
+
+select count(*) from Person.Person
+
+select top 100*from Production.Product where ListPrice > 0
+
+select * from HumanResources.vEmployee where LastName like '[a-c]%'
+
+select Name, avg(StandardCost) from Production.Product where StandardCost > 0 group by Name
+
+select PersonType, count(PersonType) from Person.Person group by PersonType
+
+select * from Person.StateProvince where CountryRegionCode = 'CA'
+
+select Color, count(Color) as total from Production.Product where Color = 'black' or  Color = 'red' group by Color
+
+select  TerritoryID, avg(Freight) as Promedio_Freight from Sales.SalesOrderHeader where TerritoryID = 4 group by TerritoryID
+
+select FirstName, LastName from Sales.vIndividualCustomer 
+where FirstName like '[C]%' AND LastName = 'Lopez' OR FirstName like '[C]%' AND LastName = 'Martin' OR FirstName like '[C]%' AND LastName = 'Wood'
+or FirstName like '[L]%' AND LastName = 'Lopez' OR FirstName like '[L]%' AND LastName = 'Martin' OR FirstName like '[L]%' AND LastName = 'Wood'
+order by FirstName
+
+select FirstName as primer_nombre, LastName as apellido from Sales.vIndividualCustomer
+where LastName = 'Smith'
+
+select FirstName, LastName, PhoneNumberType, EmailPromotion, CountryRegionName from Sales.vIndividualCustomer 
+where PhoneNumberType = 'Cell' and EmailPromotion = 0 or CountryRegionName = 'Australia'
+
+select max(ListPrice) from Production.Product 
+
 select TerritoryID, sum(TotalDue) as Ventas_territorio from Sales.SalesOrderHeader 
 where TerritoryID = 1 or TerritoryID = 4 or TerritoryID = 6 or TerritoryID = 9
 group by TerritoryID order by TerritoryID asc
@@ -44,11 +75,12 @@ where color is not null and Color = 'Black' or Color = 'Blue'
 or Color = 'Red' or Color = 'Silver' or Color = 'Yellow'
 group by Color
 
+SELECT SUM(pp.ListPrice) as 'Dinero que ganaria' FROM Production.Product pp  
+inner join Production.ProductInventory PIN on pp.ProductID= PIN.ProductID 
+where pp.ListPrice>0
 
-
-SELECT SUM(pp.ListPrice) as 'Dinero que ganaria' FROM Production.Product pp  inner join Production.ProductInventory PIN on pp.ProductID= PIN.ProductID where pp.ListPrice>0
-
-SELECT LastName, FirstName, CASE WHEN EmailPromotion=0 then 'Promo 1' WHEN EmailPromotion=1 then 'Promo 2' WHEN EmailPromotion=2 then 'Promo 3' End as 'PROMO' FROM Person.Person
+SELECT LastName, FirstName, CASE WHEN EmailPromotion=0 then 'Promo 1' WHEN EmailPromotion=1 then 'Promo 2' 
+WHEN EmailPromotion=2 then 'Promo 3' End as 'PROMO' FROM Person.Person
 
 select SSP.TerritoryID,SSP.BusinessEntityID,SSP.SalesYTD,SST.Name from Sales.SalesPerson SSP 
 INNER JOIN Sales.SalesTerritory SST ON SSP.TerritoryID=SST.TerritoryID OR SSP.TerritoryID IS NULL
@@ -59,12 +91,15 @@ INNER JOIN Person.Person PP ON PP.BusinessEntityID=SSP.BusinessEntityID WHERE SS
 Central'
 
 
-SELECT PPE.FirstName, PPE.LastName, PPA.PasswordHash FROM Person.Person PPE INNER JOIN Person.Password PPA ON PPE.BusinessEntityID=PPA.BusinessEntityID
+SELECT PPE.FirstName, PPE.LastName, PPA.PasswordHash FROM Person.Person PPE 
+INNER JOIN Person.Password PPA ON PPE.BusinessEntityID=PPA.BusinessEntityID
 
-SELECT CASE WHEN Title IS NULL	THEN 'NO HAY TITULO' WHEN Title IS NOT NULL THEN Title END AS 'TITULO' FROM Person.Person
+SELECT CASE WHEN Title IS NULL	THEN 'NO HAY TITULO' 
+WHEN Title IS NOT NULL THEN Title END AS 'TITULO' FROM Person.Person
 
 
-SELECT CASE WHEN MiddleName IS NULL THEN CONCAT(FirstName,' ', LastName) WHEN MiddleName IS NOT NULL THEN CONCAT(FirstName,'  ',LastName) END FROM Person.Person
+SELECT CASE WHEN MiddleName IS NULL THEN CONCAT(FirstName,' ', LastName) 
+WHEN MiddleName IS NOT NULL THEN CONCAT(FirstName,'  ',LastName) END FROM Person.Person
 
 select CASE WHEN PP.MakeFlag=pp.FinishedGoodsFlag THEN 'NULL' END from Production.Product PP
 
